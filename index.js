@@ -1,7 +1,13 @@
-const http = require('http');
-const express = require('express');
-const morgan = require('morgan');
+const http = require("http");
+const express = require("express");
+const router = express.Router();
+const morgan = require("morgan");
 const app = express();
+
+//importação de rotas
+const usuarioRoutes = require("./routes/usuario.routes"); //linha adicionada
+
+
 
 //variáveis de ambiente
 require('dotenv').config();
@@ -23,3 +29,4 @@ app.listen(porta, () => {
     console.log('Endereco: http://localhost:'+porta);
     // console.log(process.env.variavel); //excluir esta linha
 });
+
