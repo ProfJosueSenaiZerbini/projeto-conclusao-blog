@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-// 1. Definição do Schema (Estrutura da coleção)
 const usuarioSchema = new mongoose.Schema({
   nome: {
     type: String,
@@ -10,7 +9,7 @@ const usuarioSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'O e-mail é obrigatório'],
-    unique: true, // Garante que não existirão dois usuários com o mesmo e-mail
+    unique: true,
     lowercase: true,
     trim: true
   },
@@ -25,7 +24,6 @@ const usuarioSchema = new mongoose.Schema({
   }
 });
 
-// 2. Criação do Modelo
 const Usuario = mongoose.model('Usuario', usuarioSchema);
 
 module.exports = Usuario;

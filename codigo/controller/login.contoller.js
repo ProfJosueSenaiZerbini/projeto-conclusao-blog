@@ -34,17 +34,15 @@ exports.processarCadastro = async (req, res) => {
   const { nome, email, senha } = req.body;
 
   try {
-    // Verifica se e-mail já existe
     const usuarioExiste = await Usuario.findOne({ email });
     if (usuarioExiste) {
       return res.render('cadastra.usuario', { erro: 'Este e-mail já está em uso.' });
     }
 
-    // Salva novo usuário
     await Usuario.create({ nome, email, senha });
 
-    // Redireciona para o login após cadastrar
-    res.redirect('/login');
+    // Redireciona para o login do usuário
+    res.redirect('/usuario/login');
   } catch (error) {
     console.error(error);
     res.render('cadastra.usuario', { erro: 'Erro ao cadastrar usuário.' });
@@ -53,5 +51,5 @@ exports.processarCadastro = async (req, res) => {
 
 // --- LOGOUT (GET) ---
 exports.logout = (req, res) => {
-  res.redirect('/login');
+  res.redirect('/usuario/login');
 };
