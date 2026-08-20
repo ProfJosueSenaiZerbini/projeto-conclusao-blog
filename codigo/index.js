@@ -1,33 +1,38 @@
-const http = require("http");
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-// Importação de rotas
-const usuarioRoutes = require("./routes/usuario.routes");
-
 // Variáveis de ambiente
 require('dotenv').config();
 
-// Conexão com o banco
-require('./libs/dbConnect');
+// Importação de rotas
+const usuarioRoutes = require("./routes/usuario.routes");
 
-// Configurações iniciais
+// Configurações e Middlewares
 app.use(morgan('dev'));
 app.set('views', './views');
 app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
-// Middlewares para leitura de JSON e formulários
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Uso das rotas
 app.use("/usuario", usuarioRoutes);
 
+// Rota raiz opcional (para testar a página inicial)
+app.get("/", (req, res) => {
+    res.render("index", { mensagem: "Bem-vindo ao Blog!" });
+});
+
+// Middleware para tratamento de erro 404 (Rota não encontrada)
+app.use((req, res) => {
+    res.status(404).render("erro404");
+});
+
 const porta = Number(process.env.PORTA) || 3000;
 
 app.listen(porta, () => {
     console.log('Servidor rodando');
-    console.log('Endereco: http://localhost:' + porta);
+    console.log('Endereço: http://localhost:' + porta);
 });

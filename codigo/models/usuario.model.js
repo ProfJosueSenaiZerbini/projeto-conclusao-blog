@@ -1,15 +1,15 @@
-const { Schema, model } = require("mongoose");
+const db = require('../libs/dbConnect');
 
-const UsuarioSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-});
+const Usuario = {
+    obterTodos: (callback) => {
+        const sql = 'SELECT * FROM usuario';
+        db.query(sql, callback);
+    },
 
-const Usuario = model("Usuario", UsuarioSchema);
+    obterPorId: (id, callback) => {
+        const sql = 'SELECT * FROM usuarios WHERE id = ?';
+        db.query(sql, [id], callback);
+    }
+};
+
+module.exports = Usuario;
