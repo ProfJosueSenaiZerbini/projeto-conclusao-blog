@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const usuarioRoutes = require("./routes/usuario.routes");
 const authRoutes = require("./routes/auth.routes");
+const cadastroRoutes = require("./routes/cadastro.routes"); // <-- Importado aqui
 
 app.use(morgan('dev'));
 app.set('views', './views');
@@ -15,8 +16,9 @@ app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Alterado o prefixo de authRoutes para "/" para mapear rotas como /login diretamente
+// Rotas registradas separadamente
 app.use("/", authRoutes);
+app.use("/", cadastroRoutes); // <-- Usado aqui
 app.use("/usuario", usuarioRoutes);
 
 app.get("/", (req, res) => {

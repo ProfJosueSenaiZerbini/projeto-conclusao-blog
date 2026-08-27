@@ -1,29 +1,28 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const usuarioSchema = new mongoose.Schema({
   nome: {
     type: String,
-    required: [true, 'O nome é obrigatório'],
+    required: true,
     trim: true
   },
   email: {
     type: String,
-    required: [true, 'O e-mail é obrigatório'],
+    required: true,
     unique: true,
     lowercase: true,
     trim: true
   },
   senha: {
     type: String,
-    required: [true, 'A senha é obrigatória'],
-    minlength: [6, 'A senha deve ter no mínimo 6 caracteres']
-  },
-  criadoEm: {
-    type: Date,
-    default: Date.now
+    required: true
   }
-});
+}, { timestamps: true });
 
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+// Método para verificar se a senha informada corresponde ao hash no banco
+usuarioSchema.methods.compararSenha = async function(senhaDigitada) {
+  return await bcrypt.compare(senhaDigitada, this.senha);
+};
 
-module.exports = Usuario;
+module.exports = mongoose.model('Usuario', usuarioSchema);
