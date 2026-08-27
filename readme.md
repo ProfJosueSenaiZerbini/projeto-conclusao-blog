@@ -1,9 +1,9 @@
 ## Integrantes
 * Anna Clara Mansano
 * Haifa Cecilia Rios
-* Sofia Vicente Rotxibel
-* Daniela Victor
-* Kauã
+* Sofia Vicente
+* Rotxibel Daniela 
+*Victor Kauã
 
 ## Descrição Resumida do Projeto
 
