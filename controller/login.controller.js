@@ -1,4 +1,4 @@
-const Usuario = require('../models/usuario.model'); // Mantido um único Model
+const Usuario = require('../models/login.models');
 const bcrypt = require('bcrypt');
 
 // --- TELA DE LOGIN (GET) ---
@@ -36,7 +36,7 @@ exports.processarLogin = async (req, res) => {
 
 // --- TELA DE CADASTRO (GET) ---
 exports.exibirCadastro = (req, res) => {
-  res.render('cadastra.usuario', { erro: null });
+  res.render('cadastro', { erro: null });
 };
 
 // --- PROCESSAR CADASTRO (POST) ---
@@ -46,13 +46,13 @@ exports.processarCadastro = async (req, res) => {
   try {
     // 1. Validação de campos obrigatórios
     if (!nome || !email || !senha) {
-      return res.render('cadastra.usuario', { erro: 'Preencha todos os campos!' });
+      return res.render('cadastro', { erro: 'Preencha todos os campos!' });
     }
 
     // 2. Verifica se o e-mail já existe
     const usuarioExiste = await Usuario.findOne({ email });
     if (usuarioExiste) {
-      return res.render('cadastra.usuario', { erro: 'Este e-mail já está em uso.' });
+      return res.render('cadastro', { erro: 'Este e-mail já está em uso.' });
     }
 
     // 3. Gera o hash da senha
@@ -65,7 +65,7 @@ exports.processarCadastro = async (req, res) => {
     res.redirect('/usuario/login');
   } catch (error) {
     console.error(error);
-    res.render('cadastra.usuario', { erro: 'Erro ao cadastrar usuário.' });
+    res.render('cadastro', { erro: 'Erro ao cadastrar usuário.' });
   }
 };
 
