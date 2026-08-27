@@ -3,7 +3,8 @@
 * Haifa Cecilia Rios
 * Sofia Vicente
 * Rotxibel Daniela 
-*Victor Kauã
+* Victor Kauã
+
 
 ## Descrição Resumida do Projeto
 
