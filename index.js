@@ -23,6 +23,14 @@ app.get("/", (req, res) => {
     res.render("index", { mensagem: "Bem-vindo ao Blog!" });
 });
 
+app.get('/cadastro', (req, res) => {
+  res.render('cadastro', { erro: null });
+});
+
+app.get('/resenha', (req, res) => {
+    res.render('resenha', {erro: null})
+})
+
 app.use((req, res) => {
     res.status(404).render("erro404");
 });
