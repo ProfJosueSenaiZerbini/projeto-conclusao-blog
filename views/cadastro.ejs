@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Usuário</title>
+</head>
+<body>
+
+  <h2>Criar Conta</h2>
+
+  <!-- Exibe a mensagem de erro vinda do Controller (se houver) -->
+  <% if (erro) { %>
+    <p style="color: red;"><%= erro %></p>
+  <% } %>
+
+  <form action="/usuario/cadastrar" method="POST">
+    <div>
+      <label for="nome">Nome Completo:</label><br>
+      <input type="text" id="nome" name="nome" required>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="email">E-mail:</label><br>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <br>
+
+    <div>
+      <label for="senha">Senha:</label><br>
+      <input type="password" id="senha" name="senha" required>
+    </div>
+
+    <br>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <br>
+
+  <a href="/usuario/login">Já tem uma conta? Faça login</a>
+
+</body>
+</html>
