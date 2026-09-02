@@ -26,11 +26,11 @@ async function buscarPublicos(req,res) {
 
         const [posts] = await database.query(`
             SELECT
-            p.id, p.titulo,p.conteudo,p.imagem,p.criando_em, u.nome a autor FROM posts p INNER JOIN usuario u ON u.id = p.usuario_id
-             WHERE p.id = ? AND p.id = ? AND p.publicado = 1`,[id]);
+            p.id, p.titulo,p.conteudo,p.imagem,p.criando_em, u.nome AS autor FROM posts p INNER JOIN usuario u ON u.id = p.usuario_id
+             WHERE p.id = ? AND p.publicado = 1`,[id]);
              if(posts.length === 0) {
                 return res.status(404).json({
-                    mensegem: " Posts nao encontrado"
+                    mensagem: "Post não encontrado"
                 })
              }
 
@@ -47,7 +47,7 @@ async function buscarPublicos(req,res) {
 async function criar(req,res) {
     try{
         const {
-            titulo, resumo, conteudo, imagem, publicado
+            titulo, resumo, conteudo, imagem, publicado, usuarioId
         } = req.body;
 
         if(!titulo || !conteudo){
@@ -58,7 +58,7 @@ async function criar(req,res) {
             INSERT INTO posts(
             titulo, resumo, conteudo, imagem, publicado, usuario_id)
             VALUES(?, ?, ?, ?, ?, ?)`,
-        [titulo, resumo || null, conteudo, imagem || null, publicado ? 1: 0, req.usuario.id]
+        [titulo, resumo || null, conteudo, imagem || null, publicado ? 1: 0, usuarioId]
         )
 
         return res.status(201).json({
