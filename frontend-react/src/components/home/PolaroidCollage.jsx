@@ -11,7 +11,7 @@ const PolaroidCollage = () => {
       <div className="absolute top-0 left-4 sm:left-8 lg:left-4 z-20">
         <PolaroidCard
           image="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=540&fit=crop&crop=faces"
-          caption="PLURAL · MODA · 2026"
+          caption="LUMINA · MODA · 2026"
           rotation={-3}
           className="w-52 sm:w-60 md:w-64"
         >

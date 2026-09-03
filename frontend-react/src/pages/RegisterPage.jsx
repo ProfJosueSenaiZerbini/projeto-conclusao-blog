@@ -61,7 +61,7 @@ const RegisterPage = () => {
           <ArrowLeft size={16} /> Voltar para a Capa
         </Link>
         <h1 className="font-serif font-black text-2xl tracking-tight text-graphite relative">
-          PLURAL <span className="absolute -top-1 -right-3 text-red-editorial text-xs sparkle">✦</span>
+          LUMINA <span className="absolute -top-1 -right-3 text-red-editorial text-xs sparkle">✦</span>
         </h1>
       </div>
 
@@ -71,7 +71,7 @@ const RegisterPage = () => {
 
           <div className="text-center mb-8 pt-2">
             <h2 className="font-serif font-black text-3xl sm:text-4xl text-graphite leading-tight mb-2">
-              Junte-se à <span className="italic text-red-editorial">Redação</span>
+              Junte-se à <span className="italic text-red-editorial">Lumina</span>
             </h2>
             <p className="font-mono text-[10px] uppercase tracking-widest text-gray-500 border-b border-gray-300/50 pb-4 inline-block">
               Assinatura Cultural
@@ -126,7 +126,7 @@ const RegisterPage = () => {
 
           <div className="mt-8 text-center pt-6 border-t border-gray-300/50">
             <p className="font-sans text-xs text-gray-500">
-              Já faz parte da redação? <Link to="/login" className="font-bold text-graphite hover:text-red-editorial uppercase tracking-wider underline decoration-2 underline-offset-4">Entrar</Link>
+              Já faz parte da Lumina? <Link to="/login" className="font-bold text-graphite hover:text-red-editorial uppercase tracking-wider underline decoration-2 underline-offset-4">Entrar</Link>
             </p>
           </div>
         </div>
