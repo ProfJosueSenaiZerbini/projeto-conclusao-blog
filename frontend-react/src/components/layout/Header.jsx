@@ -52,7 +52,7 @@ const Header = () => {
         </div>
       ) : (
         <div className="w-full bg-graphite border-b border-black text-center py-1.5 px-4 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-white flex justify-between items-center select-none">
-          <span>● PAINEL DO ASSINANTE | BEM-VINDO(A), {userName.toUpperCase()}</span>
+          <span> BEM-VINDO(A), {userName.toUpperCase()}</span>
           <button onClick={handleLogout} className="hover:text-red-editorial transition-colors flex items-center gap-1">
             SAIR <LogOut size={12} />
           </button>
