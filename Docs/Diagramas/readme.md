@@ -13,4 +13,4 @@
 
 
 ### Modelo Lógico
-<img width="410" height="314" alt="Modelo Lógico" src="https://github.com/user-attachments/assets/19b57a27-2ad2-48b0-818a-07e2f0a53c34" />
+<img width="649" height="261" alt="image" src="https://github.com/user-attachments/assets/01ce6c49-52aa-408f-9eda-559962896b23" />
