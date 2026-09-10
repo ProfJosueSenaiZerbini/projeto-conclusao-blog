@@ -5,7 +5,8 @@
 # Documentação dos Diagramas
 
 ### Modelo Conceitual
-<img width="644" height="265" alt="Modelo Conceitual" src="https://github.com/user-attachments/assets/2abe576f-828c-464f-9f90-c9c9172c2b06" />
+<img width="663" height="268" alt="image" src="https://github.com/user-attachments/assets/a1135026-b5ec-44e4-882f-d7c5e32033ff" />
+
 
 ### Caso de Uso
 <img width="1350" height="395" alt="Diagrama1 (1)" src="https://github.com/user-attachments/assets/3a340b14-cd14-4a79-91dd-eb92f788a09d" />
