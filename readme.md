@@ -1,9 +1,9 @@
 ## Integrantes
-* Anna Clara Mansano
-* Haifa Cecilia Rios
-* Sofia Vicente
-* Rotxibel Daniela 
-* Victor Kauã
+* Anna Clara Mansano Santos
+* Haifa Cecilia Rios Antunes
+* Sofia Vicente de Souza
+* Rotxibel Daniela Cabello Ramirez
+* Victor Kauã Silva Figueredo
 
 
 ## Descrição Resumida do Projeto
@@ -14,57 +14,89 @@ O principal diferencial do projeto é o resgate da estética visual dos anos 200
 
 
 
-## Como Instalar o Sistema
+# Como Instalar e Rodar o Sistema
 
-*Tutorial de instalação em desenvolvimento.*
+> *Tutorial de instalação em desenvolvimento.*
 
-Pré-requisitos
-Antes de começar, é necessário ter instalado:
-React
-Node.js
-MySQL2
-Git
+---
 
+## Pré-requisitos
 
-## 🚀 Como Instalar e Rodar o Sistem
+Antes de começar, certifique-se de ter instalado em sua máquina:
 
-1. **Clonar o repositório:**
-   ```bash
-   git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/ProfJosueSenaiZerbini/projeto-conclusao-blog.git)
+* [Node.js](https://nodejs.org/)
+* [React](https://react.dev/)
+* [MySQL](https://www.mysql.com/)
+* [Git](https://git-scm.com/)
 
+---
 
-Entre na pasta do projeto:
+## Passo a Passo de Instalação
 
+### 1. Clonar o repositório
+
+Abra o terminal e execute o comando abaixo para clonar o projeto:
+
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+
+```
+
+## Entre na pasta do projeto:
+
+```bash
 cd projeto-conclusao-blog
 
-2. Instalar as dependências
+```
+
+### 2. Instalar as dependências
 
 Execute:
 
+```bash
 npm install
 
-3. Configurar o banco de dados
+```
+
+### 3. Configurar o banco de dados
 
 Crie um banco de dados no MySQL e configure os dados de conexão no projeto.
 
 Exemplo:
 
-Banco: blog
-Usuário: root
-Senha: sua_senha
-Porta: 3000
+* **Banco:** blog
+* **Usuário:** root
+* **Senha:** sua_senha
+* **Porta:** 3000
 
-4. Iniciar o sistema
+### 4. Iniciar o sistema
 
-Execute:
-npm run criar-admin --> Para criar admin
-npm start --> Roda o BackEnd
-npm run dev --> Roda o FrontEnd
+Siga a ordem dos comandos para preparar e rodar a aplicação:
+
+* **Criar o usuário administrador:**
+```bash
+npm run criar-admin
+
+```
+
+
+* **Iniciar o Back-end:**
+```bash
+npm start
+
+```
+
+
+* **Iniciar o Front-end:**
+```bash
+npm run dev
+
+```
+
 
 
 Após iniciar, acesse no navegador o endereço informado pelo terminal, geralmente:
 
 http://localhost:5173
 
-
-Pronto! O sistema estará funcionando localmente.
+Pronto! O sistema estará rodando localmente na sua máquina.
