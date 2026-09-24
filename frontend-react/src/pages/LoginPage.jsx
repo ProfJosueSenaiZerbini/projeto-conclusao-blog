@@ -37,7 +37,7 @@ const LoginPage = () => {
         localStorage.setItem('plural_token', response.token);
         localStorage.setItem('plural_user', JSON.stringify(response.usuario));
         
-        // Redireciona para a área logada
+        // Redireciona para a Home da área logada
         navigate('/home');
       }
     } catch (err) {

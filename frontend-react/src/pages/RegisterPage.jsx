@@ -40,8 +40,11 @@ const RegisterPage = () => {
       
       // Assumindo que a API retorna o token direto no registro também
       if (response.token) {
+        const user = response.user || response.usuario;
         localStorage.setItem('plural_token', response.token);
-        localStorage.setItem('plural_user', JSON.stringify(response.user || response.usuario));
+        localStorage.setItem('plural_user', JSON.stringify(user));
+        navigate('/home');
+        return;
       }
       navigate('/home');
     } catch (err) {

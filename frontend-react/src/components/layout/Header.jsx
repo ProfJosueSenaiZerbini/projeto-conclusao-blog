@@ -5,6 +5,7 @@ import { Menu, X, LogOut } from 'lucide-react';
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [userName, setUserName] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const Header = () => {
         try {
           const user = JSON.parse(userRaw);
           setUserName(user.nome || user.email || 'LEITOR');
+          setCurrentUserId(user.id || user.usuario_id || user._id);
         } catch (e) {
           setUserName('LEITOR');
         }
@@ -52,7 +54,17 @@ const Header = () => {
         </div>
       ) : (
         <div className="w-full bg-graphite border-b border-black text-center py-1.5 px-4 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-white flex justify-between items-center select-none">
-          <span> BEM-VINDO(A), {userName.toUpperCase()}</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span>● PAINEL DO ASSINANTE | BEM-VINDO(A), {userName.toUpperCase()}</span>
+            {currentUserId && (
+              <Link 
+                to={`/perfil/${currentUserId}`} 
+                className="text-red-editorial underline decoration-1 underline-offset-2 hover:text-white transition-colors"
+              >
+                [MEU PERFIL]
+              </Link>
+            )}
+          </div>
           <button onClick={handleLogout} className="hover:text-red-editorial transition-colors flex items-center gap-1">
             SAIR <LogOut size={12} />
           </button>
