@@ -70,14 +70,14 @@ const PolaroidCard = ({
 
   if (link) {
     return (
-      <Link to={link} className={`${wrapperClasses} block z-10 hover:z-50`} style={inlineStyle}>
+      <Link to={link} className={`${wrapperClasses} block z-10 hover:z-20`} style={inlineStyle}>
         {content}
       </Link>
     );
   }
 
   return (
-    <div className={`${wrapperClasses} z-10`} style={inlineStyle}>
+    <div className={`${wrapperClasses} z-10 hover:z-20`} style={inlineStyle}>
       {content}
     </div>
   );

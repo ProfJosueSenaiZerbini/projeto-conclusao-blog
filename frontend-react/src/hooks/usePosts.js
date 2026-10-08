@@ -11,7 +11,7 @@ export const usePosts = () => {
       setLoading(true);
       setError(null);
       const data = await getPosts();
-      setPosts(data);
+      setPosts(Array.isArray(data) ? data : []);
     } catch (err) {
       setError(err.response?.data?.mensagem || 'Erro ao carregar posts. Tente novamente mais tarde.');
     } finally {

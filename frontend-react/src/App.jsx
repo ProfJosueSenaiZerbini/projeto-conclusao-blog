@@ -9,6 +9,8 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import CreatePostPage from './pages/CreatePostPage';
 import CategoryPage from './pages/CategoryPage';
+import ResenhasPage from './pages/ResenhasPage';
+import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
@@ -33,6 +35,7 @@ function App() {
           {/* ROTAS PROTEGIDAS (Apenas usuários logados) */}
           <Route element={<ProtectedRoute />}>
             <Route path="home" element={<HomePage />} />
+            <Route path="resenhas" element={<ResenhasPage />} />
             <Route path="post/:id" element={<PostPage />} />
             <Route path="criar-resenha" element={<CreatePostPage />} />
             <Route path="teatro" element={<CategoryPage categoryName="TEATRO" />} />
@@ -41,6 +44,7 @@ function App() {
             <Route path="cinema" element={<CategoryPage categoryName="CINEMA" />} />
             <Route path="literatura" element={<CategoryPage categoryName="LITERATURA" />} />
             <Route path="novoPost" element={<CreatePostPage/>} />
+            <Route path="perfil" element={<ProfilePage />} />
 
           </Route>
           

@@ -1,27 +1,103 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Link as LinkIcon, Image as ImageIcon, Upload, X } from 'lucide-react';
 import { createPost } from '../services/api';
 import Badge from '../components/ui/Badge';
 import Sparkle from '../components/ui/Sparkle';
 
 const CATEGORIES = ['Cinema', 'Literatura', 'Música', 'Teatro', 'Moda', 'Resenha'];
 
+// Função para compactar imagens da galeria no navegador para carregamento instantâneo
+const compressImage = (file) => {
+  return new Promise((resolve) => {
+    if (!file || !file.type.startsWith('image/')) {
+      resolve(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const maxWidth = 1200;
+        const maxHeight = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.85));
+      };
+      img.onerror = () => resolve(event.target.result);
+    };
+    reader.onerror = () => resolve(null);
+  });
+};
+
 const CreatePostPage = () => {
   const [formData, setFormData] = useState({
     title: '',
+    image: '',
     category: 'Resenha',
     content: '',
     rating: 3,
     hasSpoiler: false,
     extraFields: ''
   });
+  const [imageSourceType, setImageSourceType] = useState('url'); // 'url' ou 'file'
+  const [imagePreview, setImagePreview] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      setError('Por favor, selecione um arquivo de imagem válido (PNG, JPG, WEBP).');
+      return;
+    }
+
+    try {
+      const compressed = await compressImage(file);
+      if (compressed) {
+        setFormData(prev => ({ ...prev, image: compressed }));
+        setImagePreview(compressed);
+        setError('');
+      }
+    } catch (err) {
+      setError('Erro ao processar imagem da galeria.');
+    }
+  };
+
+  const handleUrlChange = (e) => {
+    const val = e.target.value;
+    setFormData(prev => ({ ...prev, image: val }));
+    setImagePreview(val.trim());
+  };
+
+  const handleRemoveImage = () => {
+    setFormData(prev => ({ ...prev, image: '' }));
+    setImagePreview('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,14 +118,22 @@ const CreatePostPage = () => {
       return;
     }
 
+    // Foto é 100% opcional: se não houver ou for vazia, envia null
+    const imagemValida = formData.image && typeof formData.image === 'string' && formData.image.trim()
+      ? formData.image.trim()
+      : null;
+
     // 🟢 Mapeando os campos do React para os nomes esperados pelo backend
     const payload = {
       titulo: formData.title,
       conteudo: formData.content,
+      resumo: formData.content.slice(0, 150) + (formData.content.length > 150 ? '...' : ''),
+      imagem: imagemValida,
       categoria: formData.category,
       avaliacao: formData.rating,
       contemSpoiler: formData.hasSpoiler,
       camposExtras: formData.extraFields,
+      publicado: 1,
       usuarioId: usuarioId
     };
 
@@ -103,6 +187,120 @@ const CreatePostPage = () => {
             placeholder="Ex: Memórias Póstumas de Brás Cubas" 
             disabled={loading} 
           />
+        </div>
+
+        {/* Foto de Capa (Opcional - Link ou Galeria) */}
+        <div className="border border-graphite/40 bg-white/70 p-5 sm:p-6 space-y-4 shadow-[2px_2px_0_0_#1A1A1A]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-gray-200 pb-3">
+            <div>
+              <label className="block font-mono text-xs font-bold uppercase tracking-widest text-graphite">
+                Foto de Capa <span className="text-gray-500 font-normal text-[11px]">(Opcional)</span>
+              </label>
+              <p className="text-xs text-gray-500 font-sans mt-0.5">
+                Escolha se prefere colar um link ou enviar uma foto da sua galeria.
+              </p>
+            </div>
+
+            {/* Alternar Link / Galeria */}
+            <div className="flex bg-cream border border-graphite p-1 gap-1 self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={() => {
+                  setImageSourceType('url');
+                  if (formData.image.startsWith('data:')) {
+                    handleRemoveImage();
+                  }
+                }}
+                className={`px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors ${
+                  imageSourceType === 'url' ? 'bg-graphite text-white' : 'text-graphite hover:text-red-editorial'
+                }`}
+              >
+                <LinkIcon size={13} /> Link
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setImageSourceType('file');
+                  if (!formData.image.startsWith('data:') && formData.image) {
+                    handleRemoveImage();
+                  }
+                }}
+                className={`px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider flex items-center gap-1.5 transition-colors ${
+                  imageSourceType === 'file' ? 'bg-graphite text-white' : 'text-graphite hover:text-red-editorial'
+                }`}
+              >
+                <ImageIcon size={13} /> Galeria
+              </button>
+            </div>
+          </div>
+
+          {/* Opção 1: Link URL */}
+          {imageSourceType === 'url' && (
+            <div>
+              <input 
+                type="text" 
+                value={formData.image} 
+                onChange={handleUrlChange} 
+                className="w-full bg-cream border border-graphite px-4 py-3 text-graphite font-sans text-sm focus:outline-none focus:border-red-editorial transition-colors" 
+                placeholder="Ex: https://images.unsplash.com/... (ou deixe em branco se não quiser foto)" 
+                disabled={loading} 
+              />
+              <p className="text-[11px] text-gray-500 font-sans mt-1.5">
+                ✦ Dica: Você pode colar o link direto de qualquer imagem na internet ou deixar vazio.
+              </p>
+            </div>
+          )}
+
+          {/* Opção 2: Upload de Arquivo / Galeria */}
+          {imageSourceType === 'file' && (
+            <div>
+              <label className="border-2 border-dashed border-graphite/60 bg-cream/50 hover:bg-cream p-6 flex flex-col items-center justify-center cursor-pointer transition-colors text-center group">
+                <Upload size={28} className="text-gray-500 group-hover:text-red-editorial transition-colors mb-2" />
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-graphite">
+                  Clique para escolher uma foto da galeria
+                </span>
+                <span className="text-[11px] text-gray-500 font-sans mt-1">
+                  Formatos aceitos: PNG, JPG, JPEG ou WEBP (opcional)
+                </span>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  className="hidden" 
+                  disabled={loading} 
+                />
+              </label>
+            </div>
+          )}
+
+          {/* Preview da Imagem Selecionada */}
+          {imagePreview && (
+            <div className="pt-2 flex flex-col sm:flex-row items-center gap-4 bg-cream p-3 border border-gray-300">
+              <div className="w-20 h-20 flex-shrink-0 bg-gray-200 border border-graphite overflow-hidden">
+                <img 
+                  src={imagePreview} 
+                  alt="Prévia da foto" 
+                  className="w-full h-full object-cover" 
+                  onError={() => setImagePreview('')}
+                />
+              </div>
+              <div className="flex-1 text-center sm:text-left">
+                <p className="font-mono text-xs font-bold uppercase tracking-wider text-graphite">
+                  Foto selecionada
+                </p>
+                <p className="text-xs text-gray-500 font-sans">
+                  Essa foto será exibida no estilo polaroid na sua publicação.
+                </p>
+              </div>
+              <button 
+                type="button" 
+                onClick={handleRemoveImage} 
+                className="px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-wider text-red-editorial hover:bg-red-50 border border-red-editorial/40 flex items-center gap-1 transition-colors"
+              >
+                <X size={14} /> Remover foto
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">

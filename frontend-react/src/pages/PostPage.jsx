@@ -1,126 +1,199 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { usePost } from '../hooks/usePost';
-import Skeleton from '../components/ui/Skeleton';
-import Badge from '../components/ui/Badge';
-import Tape from '../components/ui/Tape';
-import Stamp from '../components/ui/Stamp';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, User, Clock, Heart, Share2, Loader2 } from 'lucide-react';
 
 const PostPage = () => {
   const { id } = useParams();
   const { post, loading, error } = usePost(id);
+  const [liked, setLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(42);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
+  useEffect(() => {
+    if (post?.likes) {
+      setLikesCount(post.likes);
+    }
+  }, [post]);
+
+  const handleLike = () => {
+    setLiked(!liked);
+    setLikesCount(prev => liked ? prev - 1 : prev + 1);
+  };
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: post?.titulo,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copiado para a área de transferência!');
+    }
+  };
+
   if (loading) {
     return (
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 w-full">
-        <div className="mb-8">
-          <Skeleton variant="text" className="w-32 mb-6" />
-          <Skeleton variant="title" className="mb-4" />
-          <Skeleton variant="text" className="w-48 mb-8" />
-        </div>
-        <Skeleton variant="image" className="w-full aspect-[21/9] mb-12" />
-        <div className="space-y-4">
-          <Skeleton variant="text" />
-          <Skeleton variant="text" />
-          <Skeleton variant="text" />
-          <Skeleton variant="text" className="w-2/3" />
-        </div>
-      </article>
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#F9F6F0]">
+        <Loader2 size={36} className="animate-spin text-red-editorial mb-4" />
+        <p className="font-mono text-xs uppercase tracking-widest text-gray-500">
+          Carregando publicação...
+        </p>
+      </div>
     );
   }
 
   if (error || !post) {
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-        <Stamp text="ERRO 404" size="lg" color="red" className="relative mb-8 transform-none rotate-0" />
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-graphite mb-4">
-          Post não encontrado
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-[#F9F6F0]">
+        <div className="bg-red-editorial text-white font-mono text-xs font-bold uppercase tracking-widest px-4 py-1.5 mb-6">
+          ERRO 404
+        </div>
+        <h2 className="font-serif font-black text-3xl sm:text-4xl text-graphite mb-4">
+          Publicação não encontrada
         </h2>
-        <p className="text-gray-editorial mb-8">
-          {error || "Este conteúdo não está mais disponível ou foi movido."}
+        <p className="text-gray-600 max-w-md mb-8 font-sans text-sm">
+          {error || "Este conteúdo não está disponível ou foi movido."}
         </p>
         <Link 
-          to="/" 
-          className="btn-hover inline-flex items-center gap-2 bg-graphite text-white text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-sm"
+          to="/home" 
+          className="inline-flex items-center gap-2 bg-graphite text-white text-xs font-mono font-bold uppercase tracking-wider px-6 py-3 rounded-sm hover:bg-black transition-colors"
         >
-          <ArrowLeft size={16} /> VOLTAR PARA HOME
+          <ArrowLeft size={15} /> VOLTAR PARA O FEED
         </Link>
       </div>
     );
   }
 
-  // Tratamento do bug do backend onde 'u.nome a autor' causou o não retorno do autor
-  // Se 'autor' não vier, tentamos 'a' ou mostramos 'Redação Plural'
-  const autorNome = post.autor || post.a || "Redação Plural";
+  const autorNome = post.autor || post.a || "Redação Lumina";
+  const categoriaNome = post.categoria || "RESENHA & CRÍTICA";
+  const tempoLeitura = post.tempoLeitura || "5 min de leitura";
+
+  const dataFormatada = (() => {
+    if (!post.criando_em) return 'Recentemente';
+    const d = new Date(typeof post.criando_em === 'string' ? post.criando_em.replace(' ', 'T') : post.criando_em);
+    return isNaN(d.getTime()) ? 'Recentemente' : d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+  })();
 
   return (
-    <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16 w-full">
-      
-      {/* Breadcrumb / Top Bar */}
-      <div className="flex items-center justify-between mb-8 border-b border-gray-300/40 pb-4">
-        <Link to="/" className="text-[10px] uppercase tracking-widest text-gray-400 hover:text-graphite transition-colors inline-flex items-center gap-1">
-          <ArrowLeft size={12} /> HOME / RESENHAS
-        </Link>
-        <span className="text-[10px] uppercase tracking-widest text-gray-400">
-          ID: #{post.id?.toString().padStart(4, '0')}
-        </span>
-      </div>
+    <div className="w-full bg-[#F9F6F0] min-h-screen py-10 sm:py-16">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Barra Superior / Voltar */}
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-300">
+          <Link 
+            to="/home" 
+            className="text-xs font-mono uppercase font-bold tracking-widest text-graphite hover:text-red-editorial transition-colors inline-flex items-center gap-2"
+          >
+            <ArrowLeft size={14} /> VOLTAR AO FEED
+          </Link>
 
-      {/* Header do Post */}
-      <header className="mb-10 text-center flex flex-col items-center">
-        <Badge variant="outline" className="mb-6">CULTURA</Badge>
-        
-        <h1 className="font-serif font-black text-4xl sm:text-5xl md:text-6xl text-graphite leading-[1.1] tracking-tight mb-6">
-          {post.titulo}
-        </h1>
-        
-        <div className="flex items-center justify-center gap-4 text-xs font-sans uppercase tracking-widest text-gray-500">
-          <span>Por <strong className="text-graphite">{autorNome}</strong></span>
-          <span className="w-1 h-1 bg-red-editorial rounded-full"></span>
-          <span>{new Date(post.criando_em).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
+          <span className="text-[11px] font-mono tracking-widest text-gray-500 uppercase">
+            ID: #{String(post.id).padStart(4, '0')}
+          </span>
         </div>
-      </header>
 
-      {/* Imagem de Capa (Estilo Polaroid gigante) */}
-      {post.imagem && (
-        <div className="relative mb-12 lg:mb-16">
-          <div className="polaroid relative bg-white p-3 pb-8 sm:p-4 sm:pb-12 shadow-2xl transform -rotate-1 hover:rotate-0 transition-transform duration-500">
-            <Tape variant="yellow" className="-top-3 left-1/2 -translate-x-1/2 w-24 h-8 rotate-1" />
-            <img 
-              src={post.imagem} 
-              alt={post.titulo}
-              className="w-full max-h-[600px] object-cover bg-gray-100" 
-            />
-            <Stamp text="ARQUIVO<br/>PLURAL" size="sm" color="red" className="-bottom-6 -right-6" />
+        {/* Cabeçalho do Artigo */}
+        <header className="mb-10 text-left">
+          
+          {/* Categoria */}
+          <div className="mb-4">
+            <span className="bg-black text-white font-mono text-[10px] sm:text-xs font-bold tracking-widest px-3 py-1 uppercase inline-block border border-black shadow-[2px_2px_0_0_#C8382B]">
+              {categoriaNome}
+            </span>
+          </div>
+
+          {/* Título Principal */}
+          <h1 className="font-serif font-black text-3xl sm:text-4xl md:text-5xl text-graphite leading-[1.12] tracking-tight mb-6">
+            {post.titulo}
+          </h1>
+
+          {/* Linha de Autor, Data e Leitura */}
+          <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs font-sans text-gray-500 border-t border-b border-gray-200 py-3">
+            <div className="flex items-center gap-1.5 text-red-editorial font-bold">
+              <User size={14} className="text-red-editorial" />
+              <span className="text-graphite">{autorNome}</span>
+            </div>
+            
+            <span className="text-gray-300">•</span>
+
+            <div className="flex items-center gap-1 text-gray-500">
+              <Clock size={14} />
+              <span>{tempoLeitura}</span>
+            </div>
+
+            <span className="text-gray-300">•</span>
+
+            <span>Publicado em {dataFormatada}</span>
+          </div>
+        </header>
+
+        {/* Imagem de Capa */}
+        {post.imagem && (
+          <div className="relative mb-12 bg-white border-2 border-graphite shadow-[6px_6px_0_0_#1A1A1A]">
+            {/* Efeito de Fita Adesiva Translúcida */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-6 bg-white/60 border border-white/70 shadow-sm backdrop-blur-[1px] rotate-1 z-10 pointer-events-none" />
+
+            <div className="overflow-hidden aspect-[16/9] w-full bg-gray-100">
+              <img 
+                src={post.imagem} 
+                alt={post.titulo}
+                className="w-full h-full object-cover" 
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Conteúdo do Artigo */}
+        <div className="bg-white border border-gray-200 p-6 sm:p-10 shadow-[3px_3px_0_0_#1A1A1A] mb-12">
+          <div className="font-sans text-base sm:text-lg text-gray-800 leading-relaxed space-y-6">
+            {typeof post.conteudo === 'string' && post.conteudo.split('\n\n').map((paragrafo, idx) => (
+              <p key={idx} className="leading-relaxed">
+                {paragrafo}
+              </p>
+            ))}
           </div>
         </div>
-      )}
 
-      {/* Conteúdo */}
-      <div className="font-sans text-base md:text-lg text-gray-editorial leading-relaxed max-w-2xl mx-auto space-y-6 md:space-y-8 prose prose-p:text-gray-editorial prose-headings:font-serif prose-headings:text-graphite prose-a:text-red-editorial">
-        {/* Se o conteudo for HTML simples ou texto, usamos dangerouslySetInnerHTML para manter a formatação se vier do banco */}
-        <div dangerouslySetInnerHTML={{ __html: post.conteudo.replace(/\n/g, '<br/>') }} />
-      </div>
+        {/* Barra de Ações (Curtir / Compartilhar / Voltar) */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-300">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleLike}
+              className={`flex items-center gap-2 border px-4 py-2 rounded-sm text-xs font-mono font-bold transition-colors ${
+                liked
+                  ? 'border-red-editorial bg-red-editorial text-white'
+                  : 'border-graphite bg-white text-graphite hover:border-red-editorial hover:text-red-editorial'
+              }`}
+            >
+              <Heart size={15} className={liked ? "fill-white" : ""} />
+              <span>{likesCount} CURTIDAS</span>
+            </button>
 
-      {/* Footer do Post */}
-      <div className="mt-16 pt-8 border-t border-gray-300/40 text-center">
-        <p className="font-serif italic text-xl text-graphite mb-6">Fim da leitura.</p>
-        <Link 
-          to="/" 
-          className="btn-hover inline-flex items-center gap-2 bg-transparent border-2 border-graphite text-graphite text-xs sm:text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-sm hover:bg-graphite hover:text-white transition-colors"
-        >
-          <ArrowLeft size={16} /> LER MAIS RESENHAS
-        </Link>
-      </div>
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-2 border border-graphite bg-white text-graphite hover:bg-gray-50 px-4 py-2 rounded-sm text-xs font-mono font-bold transition-colors"
+            >
+              <Share2 size={15} />
+              <span>COMPARTILHAR</span>
+            </button>
+          </div>
 
-    </article>
+          <Link
+            to="/home"
+            className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-graphite hover:text-red-editorial transition-colors"
+          >
+            <ArrowLeft size={14} /> VOLTAR PARA O FEED
+          </Link>
+        </div>
+
+      </article>
+    </div>
   );
 };
 
 export default PostPage;
-
