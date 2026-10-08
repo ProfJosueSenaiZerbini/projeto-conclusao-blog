@@ -5,7 +5,11 @@ import { Home, BookOpen, User, PlusCircle, LogOut } from 'lucide-react';
 const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [userName, setUserName] = useState('');
+<<<<<<< HEAD
   const [isLogged, setIsLogged] = useState(false);
+=======
+  const [currentUserId, setCurrentUserId] = useState(null);
+>>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -17,7 +21,12 @@ const Header = () => {
       if (userRaw) {
         try {
           const user = JSON.parse(userRaw);
+<<<<<<< HEAD
           setUserName(user.nome || user.email || 'Usuário');
+=======
+          setUserName(user.nome || user.email || 'LEITOR');
+          setCurrentUserId(user.id || user.usuario_id || user._id);
+>>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
         } catch (e) {
           setUserName('Usuário');
         }
@@ -38,7 +47,37 @@ const Header = () => {
   const isHome = location.pathname === '/home' || location.pathname === '/';
 
   return (
+<<<<<<< HEAD
     <header className="w-full bg-[#F9F6F0] border-b border-gray-300 sticky top-0 z-[100]">
+=======
+    <header className="w-full bg-cream-light border-b border-gray-300/50 sticky top-0 z-50">
+
+      {/* ✦ BANNERS DE SINALIZAÇÃO DE ROTA ✦ */}
+      {isLanding ? (
+        <div className="w-full bg-[#E8E08C] border-b border-graphite text-center py-1.5 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-graphite select-none">
+          ✦ EDIÇÃO DE APRESENTAÇÃO PÚBLICA — DESTAQUES DA REVISTA ✦
+        </div>
+      ) : (
+        <div className="w-full bg-graphite border-b border-black text-center py-1.5 px-4 font-mono text-[9px] sm:text-[10px] uppercase font-bold tracking-widest text-white flex justify-between items-center select-none">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <span>● PAINEL DO ASSINANTE | BEM-VINDO(A), {userName.toUpperCase()}</span>
+            {currentUserId && (
+              <Link 
+                to={`/perfil/${currentUserId}`} 
+                className="text-red-editorial underline decoration-1 underline-offset-2 hover:text-white transition-colors"
+              >
+                [MEU PERFIL]
+              </Link>
+            )}
+          </div>
+          <button onClick={handleLogout} className="hover:text-red-editorial transition-colors flex items-center gap-1">
+            SAIR <LogOut size={12} />
+          </button>
+        </div>
+      )}
+
+      {/* Top Bar */}
+>>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           

@@ -79,15 +79,14 @@ npm run criar-admin
 
 ```
 
-
 * **Iniciar o Back-end:**
 ```bash
 npm start
 
 ```
 
-
-* **Iniciar o Front-end:**
+  * ** inicia O Frontend ** *
+    
 ```bash
 npm run dev
 

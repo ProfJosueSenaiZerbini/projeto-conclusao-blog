@@ -58,4 +58,8 @@ export const createPost = (postData) => {
   return api.post('/posts/criar', postData);
 };
 
+export const getUserProfile = (userId) => {
+  return api.get(`/users/${userId}`);
+};
+
 export default api;
