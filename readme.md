@@ -48,6 +48,9 @@ git clone https://github.com/seu-usuario/seu-repositorio.git
 cd projeto-conclusao-blog
 
 ```
+### 2. ENtrar na Pasta
+
+entre na pasta backend
 
 ### 2. Instalar as dependências
 
@@ -79,7 +82,6 @@ npm run criar-admin
 
 ```
 
-
 * **Iniciar o Back-end:**
 ```bash
 npm start
@@ -87,7 +89,16 @@ npm start
 ```
 
 
-* **Iniciar o Front-end:**
+### 4. Frontend
+
+  abra outro terminal
+
+  entre na pasta
+
+  instale as dependências
+
+  * ** inicia O Frontend ** *
+    
 ```bash
 npm run dev
 
@@ -95,7 +106,7 @@ npm run dev
 
 
 
-Após iniciar, acesse no navegador o endereço informado pelo terminal, geralmente:
+Após iniciar, acesse no navegador o endereço informado pelo terminal, geralmente do Backend:
 
 http://localhost:5173
 
