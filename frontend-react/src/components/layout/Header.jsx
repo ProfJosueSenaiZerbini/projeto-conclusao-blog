@@ -5,11 +5,8 @@ import { Home, BookOpen, User, PlusCircle, LogOut } from 'lucide-react';
 const Header = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [userName, setUserName] = useState('');
-<<<<<<< HEAD
   const [isLogged, setIsLogged] = useState(false);
-=======
   const [currentUserId, setCurrentUserId] = useState(null);
->>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -21,12 +18,8 @@ const Header = () => {
       if (userRaw) {
         try {
           const user = JSON.parse(userRaw);
-<<<<<<< HEAD
           setUserName(user.nome || user.email || 'Usuário');
-=======
-          setUserName(user.nome || user.email || 'LEITOR');
           setCurrentUserId(user.id || user.usuario_id || user._id);
->>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
         } catch (e) {
           setUserName('Usuário');
         }
@@ -44,13 +37,11 @@ const Header = () => {
     navigate('/login');
   };
 
+  const isLanding = location.pathname === '/';
   const isHome = location.pathname === '/home' || location.pathname === '/';
 
   return (
-<<<<<<< HEAD
     <header className="w-full bg-[#F9F6F0] border-b border-gray-300 sticky top-0 z-[100]">
-=======
-    <header className="w-full bg-cream-light border-b border-gray-300/50 sticky top-0 z-50">
 
       {/* ✦ BANNERS DE SINALIZAÇÃO DE ROTA ✦ */}
       {isLanding ? (
@@ -77,7 +68,6 @@ const Header = () => {
       )}
 
       {/* Top Bar */}
->>>>>>> ff41acb288869092937bea1f11b6bbaa65dbb5b8
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           

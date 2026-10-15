@@ -43,7 +43,7 @@ const Navbar = () => {
     }`;
 
   return (
-    <header className="w-full bg-cream border-b-2 border-graphite sticky top-0 z-50">
+    <header className="w-full bg-cream border-b-2 border-graphite sticky top-0 z-[100]">
       
       {/* ✦ BANNERS SUPERIORES DE STATUS ✦ */}
       {isLanding ? (

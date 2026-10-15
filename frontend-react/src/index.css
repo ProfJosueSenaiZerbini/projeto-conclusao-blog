@@ -97,7 +97,7 @@
   .polaroid:hover {
     transform: scale(1.03) rotate(0deg) !important;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-    z-index: 50 !important;
+    z-index: 40 !important;
   }
 
   .sparkle {
