@@ -38,8 +38,7 @@ Antes de começar, certifique-se de ter instalado em sua máquina:
 Abra o terminal e execute o comando abaixo para clonar o projeto:
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
-
+git clone https://github.com/ProfJosueSenaiZerbini/projeto-conclusao-blog
 ```
 
 ## Entre na pasta do projeto:
