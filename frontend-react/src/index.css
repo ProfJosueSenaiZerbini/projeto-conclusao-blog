@@ -29,6 +29,27 @@
     );
   }
 
+  /* ✦ Novas Fitas Y2K ✦ */
+  .tape-pink {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 182, 193, 0.75) 0%,
+      rgba(255, 105, 180, 0.5) 50%,
+      rgba(255, 182, 193, 0.7) 100%
+    );
+    backdrop-filter: blur(0.5px);
+  }
+
+  .tape-purple {
+    background: linear-gradient(
+      135deg,
+      rgba(230, 230, 250, 0.8) 0%,
+      rgba(186, 85, 211, 0.45) 50%,
+      rgba(230, 230, 250, 0.75) 100%
+    );
+    backdrop-filter: blur(0.5px);
+  }
+
   /* ─── Stamp effect ─── */
   .stamp {
     border: 3px solid currentColor;
@@ -103,6 +124,11 @@
   .sparkle {
     animation: sparkle 2.5s ease-in-out infinite;
   }
+
+  /* ✦ Efeito Glossy Y2K ✦ */
+  .y2k-glossy {
+    background: linear-gradient(180deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+  }
 }
 
 /* ─── Decorative sparkle animation ─── */
@@ -117,4 +143,3 @@
     transform: scale(0.85);
   }
 }
-

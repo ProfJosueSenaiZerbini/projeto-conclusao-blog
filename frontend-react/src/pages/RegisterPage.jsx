@@ -63,9 +63,6 @@ const RegisterPage = () => {
         <Link to="/" className="text-xs font-mono uppercase tracking-widest text-graphite hover:text-red-editorial transition-colors inline-flex items-center gap-2 font-bold">
           <ArrowLeft size={16} /> Voltar para a Capa
         </Link>
-        <h1 className="font-serif font-black text-2xl tracking-tight text-graphite relative">
-          LUMINA <span className="absolute -top-1 -right-3 text-red-editorial text-xs sparkle">✦</span>
-        </h1>
       </div>
 
       <div className="w-full max-w-xl relative mt-16 sm:mt-8 z-10">

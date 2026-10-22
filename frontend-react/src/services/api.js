@@ -10,7 +10,6 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('plural_token');
     if (token) {
-      // Formato padrão "Bearer TOKEN" (ou altere para `config.headers.Authorization = token` se seu backend não usar Bearer)
       config.headers.Authorization = `Bearer ${token}`; 
     }
     return config;
@@ -37,7 +36,6 @@ export const getPost = (id) => {
   return api.get(`/posts/${id}`);
 };
 
-// Endpoints adicionados conforme o novo escopo da Landing Page
 export const searchPosts = (query) => {
   return api.get(`/search?q=${query}`);
 };
@@ -60,6 +58,27 @@ export const createPost = (postData) => {
 
 export const getUserProfile = (userId) => {
   return api.get(`/users/${userId}`);
+};
+
+export const updateUserProfile = (userId, data) => {
+  return api.put(`/users/${userId}`, data);
+};
+
+// ✦ REDE SOCIAL: Curtidas e Comentários
+export const toggleLike = (postId) => {
+  return api.post(`/posts/${postId}/curtir`);
+};
+
+export const getLikeStatus = (postId) => {
+  return api.get(`/posts/${postId}/curtidas`);
+};
+
+export const getComments = (postId) => {
+  return api.get(`/posts/${postId}/comentarios`);
+};
+
+export const addComment = (postId, texto) => {
+  return api.post(`/posts/${postId}/comentarios`, { texto });
 };
 
 export default api;

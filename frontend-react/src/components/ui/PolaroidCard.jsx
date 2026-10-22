@@ -13,7 +13,7 @@ const PolaroidCard = ({
   children // for stamps or badges inside the image area
 }) => {
   
-  // Random tape style based on rotation if not specified
+  // Estilo de fita adesiva clássica e retrô
   const tapeVariant = rotation > 0 ? 'blue' : 'yellow';
   const tapeRotation = rotation > 0 ? -3 : 2;
 
@@ -36,7 +36,7 @@ const PolaroidCard = ({
           />
         ) : (
           <div className="w-full h-full flex flex-col items-center justify-center bg-gray-100 text-gray-400 p-4 text-center">
-            <span className="font-serif text-2xl mb-2">LUMINA</span>
+            <span className="font-serif text-2xl mb-2">PLURAL</span>
             <span className="text-xs uppercase tracking-widest">Sem Imagem</span>
           </div>
         )}
@@ -84,4 +84,3 @@ const PolaroidCard = ({
 };
 
 export default PolaroidCard;
-

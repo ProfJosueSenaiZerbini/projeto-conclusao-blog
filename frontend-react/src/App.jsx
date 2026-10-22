@@ -16,7 +16,6 @@ import Home from './pages/Home';
 import Resenhas from './pages/Resenhas';
 import ResenhasPage from './pages/ResenhasPage';
 import PerfilUsuario from './pages/PerfilUsuario';
-import ProfilePage from './pages/ProfilePage';
 import PostPage from './pages/PostPage';
 import CreatePostPage from './pages/CreatePostPage';
 import CategoryPage from './pages/CategoryPage';
@@ -43,7 +42,7 @@ function App() {
               <Route path="/resenhas" element={<Resenhas />} />
               <Route path="/resenhas-page" element={<ResenhasPage />} />
               <Route path="/perfil/:userId" element={<PerfilUsuario />} />
-              <Route path="/perfil" element={<ProfilePage />} />
+              <Route path="/perfil" element={<PerfilUsuario />} />
               <Route path="/post/:id" element={<PostPage />} />
               <Route path="/novoPost" element={<CreatePostPage />} />
               

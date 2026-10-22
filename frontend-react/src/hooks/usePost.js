@@ -103,9 +103,10 @@ export const usePost = (id) => {
       const data = await getPost(id);
       setPost(data);
     } catch (err) {
-      // Se não encontrou no backend, mas existe nos mocks
-      if (MOCK_ARTICLES[id]) {
-        setPost(MOCK_ARTICLES[id]);
+      // Se não encontrou no backend, mas existe nos mocks (ex: 'mock-1' ou '1')
+      const fallback = MOCK_ARTICLES[id] || MOCK_ARTICLES[`mock-${id}`];
+      if (fallback) {
+        setPost(fallback);
       } else {
         setError(err.response?.data?.mensagem || 'Erro ao carregar a resenha. Pode ter sido removida ou não existe.');
       }
