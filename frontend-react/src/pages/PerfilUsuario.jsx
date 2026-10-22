@@ -9,7 +9,6 @@ import {
 import { getUserProfile, updateUserProfile, getPosts } from '../services/api';
 import Tape from '../components/ui/Tape';
 import Badge from '../components/ui/Badge';
-import Stamp from '../components/ui/Stamp';
 
 // Função para compactar imagens carregadas pelo usuário diretamente no navegador
 const compressImage = (file, maxWidth = 1200, maxHeight = 1200) => {
@@ -305,7 +304,6 @@ const PerfilUsuario = () => {
       <div className="max-w-xl mx-auto px-4 py-16 text-center">
         <div className="bg-cream-light border-2 border-graphite p-8 sm:p-12 shadow-[8px_8px_0_0_#111] relative">
           <Tape variant="yellow" className="-top-3 left-1/2 -translate-x-1/2 w-28 h-6" />
-          <Stamp text="NÃO<br/>LOCALIZADO" color="red" size="md" className="relative mx-auto mb-6 transform -rotate-6" />
 
           <h2 className="font-serif font-black text-2xl sm:text-3xl text-graphite mb-2">
             Perfil Inexistente
@@ -316,7 +314,7 @@ const PerfilUsuario = () => {
 
           <button
             onClick={() => navigate('/home')}
-            className="inline-flex items-center gap-2 bg-graphite text-white font-mono text-xs uppercase tracking-widest px-6 py-3 hover:bg-red-editorial transition-colors"
+            className="inline-flex items-center gap-2 bg-graphite text-white font-mono text-xs uppercase tracking-widest px-6 py-3 hover:bg-red-editorial transition-colors cursor-pointer"
           >
             <ArrowLeft size={16} /> Voltar para o Feed
           </button>
@@ -349,7 +347,7 @@ const PerfilUsuario = () => {
 
   return (
     <div className="w-full bg-[#F4F1EA] min-h-screen py-8 sm:py-12">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Barra Superior / Voltar */}
         <div className="flex items-center justify-between pb-3 border-b border-gray-300">
@@ -369,12 +367,12 @@ const PerfilUsuario = () => {
         </div>
 
         {/* ✦ CARTÃO 1: CABEÇALHO DO PERFIL ESTILO LINKEDIN (COM IDENTIDADE LUMINA) ✦ */}
-        <div className="bg-white border-2 border-graphite shadow-[6px_6px_0_0_#111111] relative overflow-hidden">
+        <div className="bg-white border-2 border-graphite shadow-[6px_6px_0_0_#111111] relative">
           
           {/* Fita adesiva decorativa retrô no canto */}
           <Tape variant="yellow" className="-top-3 right-8 w-24 h-6 rotate-2 pointer-events-none" />
 
-          {/* 1.1 Banner / Capa Superior da Página */}
+          {/* 1.1 Banner / Capa Superior da Página (com overflow-hidden interno) */}
           <div className="relative h-44 sm:h-56 md:h-64 w-full bg-gradient-to-r from-[#E9E4DC] via-[#FAF6F0] to-[#E2DDD5] border-b-2 border-graphite overflow-hidden flex items-center justify-center">
             
             {/* Imagem de Capa Customizada (se definida) */}
@@ -418,16 +416,16 @@ const PerfilUsuario = () => {
             )}
           </div>
 
-          {/* 1.2 Área de Conteúdo abaixo da Capa */}
-          <div className="p-6 sm:p-8 pt-0">
+          {/* 1.2 Área de Conteúdo abaixo da Capa (Com padding inferior generoso) */}
+          <div className="px-6 sm:px-8 pt-0 pb-10 sm:pb-12">
             
             {/* Linha do Avatar e Destaques da Direita */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 -mt-16 sm:-mt-20 mb-6">
               
-              {/* Foto de Perfil com Anel de Status (#OPENTOWORK / #CRIADORA) */}
+              {/* Foto de Perfil com Anel de Status (#CRIADORA ATIVA) */}
               <div className="relative inline-block">
                 
-                {/* Moldura circular com anel verde/editorial de status */}
+                {/* Moldura circular com anel de status */}
                 <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white bg-graphite shadow-[4px_4px_0_0_#111111] overflow-hidden flex items-center justify-center relative group">
                   
                   {/* Foto de Perfil ou Monograma */}
@@ -443,16 +441,16 @@ const PerfilUsuario = () => {
                     </div>
                   )}
 
-                  {/* Anel de Status Curvado sobre o Avatar */}
-                  <div className="absolute inset-x-0 bottom-0 bg-green-700/95 text-white font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-center py-1 border-t border-white shadow-xs">
+                  {/* Anel de Status Curvado com texto legível sobre o Avatar */}
+                  <div className="absolute inset-x-0 bottom-0 bg-green-700 text-white font-mono text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-center py-1 border-t-2 border-white shadow-xs z-10">
                     {usuario.status_tag || '#CRIADORA ATIVA'}
                   </div>
 
-                  {/* Botão de Câmera para trocar foto */}
+                  {/* Botão de Câmera para trocar foto no hover */}
                   {isProprioPerfil && (
                     <button
                       onClick={() => setMostrarModalEdicao(true)}
-                      className="absolute inset-0 bg-black/50 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer font-mono text-[10px] font-bold uppercase tracking-wider"
+                      className="absolute inset-0 bg-black/60 text-white flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer font-mono text-[10px] font-bold uppercase tracking-wider z-20"
                       title="Editar foto de perfil"
                     >
                       <Camera size={20} className="mb-1" />
@@ -463,7 +461,7 @@ const PerfilUsuario = () => {
 
               </div>
 
-              {/* Destaques / Afiliações do Perfil (como Careline Lifestyles / Durham University) */}
+              {/* Destaques / Afiliações do Perfil */}
               <div className="flex flex-col gap-2.5 text-xs font-sans text-graphite">
                 <div className="flex items-center gap-2.5 font-bold hover:text-red-editorial transition-colors cursor-pointer">
                   <div className="w-7 h-7 rounded-sm border border-graphite bg-red-50 flex items-center justify-center text-red-editorial flex-shrink-0">
@@ -485,14 +483,15 @@ const PerfilUsuario = () => {
             {/* Informações Principais do Usuário */}
             <div className="space-y-3">
               
-              {/* Nome e Badges */}
+              {/* Nome e Badges de Verificação (Sem sobrepor nada) */}
               <div className="flex flex-wrap items-center gap-2.5">
                 <h1 className="font-serif font-black text-2xl sm:text-3xl text-graphite tracking-tight">
                   {nomeExibicao}
                 </h1>
                 
-                <span className="text-red-editorial text-sm font-bold" title="Perfil Verificado">
-                  ✧
+                {/* Selo de Conta Verificada limpo e destacado */}
+                <span className="inline-flex items-center gap-1 bg-red-50 text-red-editorial border border-red-200 px-2 py-0.5 text-[10px] font-mono font-bold uppercase rounded-sm shadow-2xs">
+                  <Check size={11} className="stroke-[3]" /> VERIFICADA
                 </span>
 
                 <span className="text-gray-400 font-mono text-xs">
@@ -543,8 +542,8 @@ const PerfilUsuario = () => {
 
             </div>
 
-            {/* 1.3 Botões de Ação Principais (Message, Follow, More, EDITAR PERFIL) */}
-            <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-200 mt-6">
+            {/* 1.3 Botões de Ação Principais (com espaçamento e dropdown sem corte) */}
+            <div className="flex flex-wrap items-center gap-3 pt-6 pb-2 border-t border-gray-200 mt-6 relative z-20">
               
               {/* Botão de Edição Completa para o próprio usuário */}
               {isProprioPerfil ? (
@@ -611,7 +610,7 @@ const PerfilUsuario = () => {
                 <span className="hidden sm:inline">COMPARTILHAR</span>
               </button>
 
-              {/* Menu 'Mais' */}
+              {/* Menu 'Mais' com Dropdown NÃO cortado */}
               <div className="relative">
                 <button
                   onClick={() => setMostrarMaisOpcoes(!mostrarMaisOpcoes)}
@@ -622,13 +621,13 @@ const PerfilUsuario = () => {
                 </button>
 
                 {mostrarMaisOpcoes && (
-                  <div className="absolute left-0 mt-2 w-48 bg-white border-2 border-graphite shadow-[4px_4px_0_0_#111111] z-30 py-1.5 text-xs font-mono uppercase font-bold">
+                  <div className="absolute right-0 sm:left-0 mt-2 w-52 bg-white border-2 border-graphite shadow-[5px_5px_0_0_#111111] z-50 py-2 text-xs font-mono uppercase font-bold">
                     <button
                       onClick={() => {
                         handleCompartilhar();
                         setMostrarMaisOpcoes(false);
                       }}
-                      className="w-full text-left px-4 py-2 hover:bg-red-50 hover:text-red-editorial transition-colors cursor-pointer"
+                      className="w-full text-left px-4 py-2.5 hover:bg-red-50 hover:text-red-editorial transition-colors cursor-pointer"
                     >
                       Copiar Link do Perfil
                     </button>
@@ -638,7 +637,7 @@ const PerfilUsuario = () => {
                           setMostrarModalEdicao(true);
                           setMostrarMaisOpcoes(false);
                         }}
-                        className="w-full text-left px-4 py-2 hover:bg-red-50 hover:text-red-editorial transition-colors cursor-pointer"
+                        className="w-full text-left px-4 py-2.5 hover:bg-red-50 hover:text-red-editorial transition-colors cursor-pointer"
                       >
                         Editar Perfil Completo
                       </button>
@@ -654,7 +653,7 @@ const PerfilUsuario = () => {
 
         {/* ✦ CARTÃO 2: CALLOUT CARD "CONECTE-SE" ✦ */}
         {!isProprioPerfil && (
-          <div className="bg-white border-2 border-graphite p-5 sm:p-6 shadow-[4px_4px_0_0_#111111] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-white border-2 border-graphite p-6 sm:p-7 shadow-[4px_4px_0_0_#111111] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="font-serif font-bold text-base sm:text-lg text-graphite mb-0.5">
                 Conecte-se para acompanhar novas leituras e resenhas
@@ -674,24 +673,30 @@ const PerfilUsuario = () => {
           </div>
         )}
 
-        {/* ✦ CARTÃO 3: DESTAQUE DE ATUAÇÃO ✦ */}
-        <div className="bg-white border-2 border-graphite p-6 shadow-[5px_5px_0_0_#C8102E] relative">
+        {/* ✦ CARTÃO 3: DESTAQUE DE ATUAÇÃO (Totalmente desobstruído e legível) ✦ */}
+        <div className="bg-white border-2 border-graphite p-6 sm:p-8 shadow-[5px_5px_0_0_#C8102E] relative">
           <Tape variant="yellow" className="-top-3 left-8 w-20 h-5 -rotate-1 pointer-events-none" />
 
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-editorial animate-ping" />
-                <span className="font-mono text-xs uppercase font-bold tracking-widest text-red-editorial">
-                  {usuario.status_tag || 'ATUAÇÃO EDITORIAL ATIVA'}
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
+            <div className="flex-1 min-w-0">
+              
+              {/* Badge destacado e 100% legível */}
+              <div className="flex items-center gap-2 mb-2.5 flex-wrap">
+                <span className="w-2.5 h-2.5 rounded-full bg-green-600 animate-pulse flex-shrink-0" />
+                <span className="font-mono text-xs uppercase font-bold tracking-widest text-graphite bg-green-50 border border-green-300 px-2.5 py-0.5 rounded-sm">
+                  ● {usuario.status_tag || '#CRIADORA ATIVA'}
+                </span>
+                <span className="text-gray-300 hidden sm:inline">|</span>
+                <span className="font-mono text-xs text-gray-500 uppercase tracking-wider hidden sm:inline">
+                  COLABORAÇÃO ATIVA
                 </span>
               </div>
 
-              <h4 className="font-serif font-bold text-lg text-graphite mb-1">
+              <h4 className="font-serif font-bold text-lg sm:text-xl text-graphite mb-1.5">
                 Colaboradora de Ensaios & Crítica Cultural
               </h4>
 
-              <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mb-3">
+              <p className="font-sans text-xs sm:text-sm text-gray-600 leading-relaxed max-w-2xl mb-4">
                 {usuario.bio ? usuario.bio.slice(0, 180) + '...' : 'Escreve resenhas analíticas sobre cinema internacional, romances contemporâneos e debates sobre a presença feminina nas artes visuais.'}
               </p>
 
@@ -704,12 +709,18 @@ const PerfilUsuario = () => {
               </button>
             </div>
 
-            <Stamp text="VERIFICADO<br/>LUMINA" color="black" size="sm" className="hidden sm:flex flex-shrink-0" />
+            {/* Selo de Verificação NÃO ABSOLUTO (ao lado, com layout limpo e sem sobrepor texto) */}
+            <div className="flex sm:flex-col items-center justify-center p-3.5 border-2 border-graphite bg-[#FAF6F0] shadow-[3px_3px_0_0_#111111] flex-shrink-0 select-none">
+              <ShieldCheck size={22} className="text-red-editorial mb-1" />
+              <span className="font-mono text-[9px] font-black uppercase text-center leading-tight text-graphite">
+                PERFIL<br/>VERIFICADO
+              </span>
+            </div>
           </div>
         </div>
 
         {/* ✦ CARTÃO 4: ABAS E PUBLICAÇÕES DO USUÁRIO ✦ */}
-        <div className="bg-white border-2 border-graphite shadow-[6px_6px_0_0_#111111] p-6 sm:p-8">
+        <div className="bg-white border-2 border-graphite shadow-[6px_6px_0_0_#111111] p-6 sm:p-8 pb-12 sm:pb-16">
           
           {/* Navegação por Abas */}
           <div className="flex items-center gap-4 sm:gap-8 border-b-2 border-gray-200 pb-4 mb-8">
